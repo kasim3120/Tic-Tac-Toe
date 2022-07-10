@@ -37,9 +37,11 @@ function Game() {
     }
     checkForWinner();
   },[gameState]);
-
+  
+  //重置盤面
   const resetBoard = () => setGameState(INITIAL_GAME_STATE);
-
+  
+  //勝利玩家處理流程
   const handleWin = () => {
     window.alert(`Congrats player ${currentPlayer}! You are the winner!`);
 
@@ -51,15 +53,17 @@ function Game() {
     
     resetBoard();
   }
-
+  
+  //平手處理流程
   const handleDraw = () => {
     window.alert("The game ended in a draw");
 
     resetBoard();
   }
-
+  
+  //勝利玩家確認流程
   const checkForWinner = () => {
-    let roundWon = false;
+    let roundWin = false;
 
     for(let i = 0; i < WINNER_COMBO.length; i++) {
       const winCombo = WINNER_COMBO[i];
@@ -73,12 +77,12 @@ function Game() {
       };
 
       if(a === b && b ===c) {
-        roundWon = true;
+        roundWin = true;
         break;
       };
     }
 
-    if(roundWon) {
+    if(roundWin) {
       setTimeout(() =>  handleWin() , 500);
       return ;
     };
@@ -90,10 +94,11 @@ function Game() {
     changePlayer();
   };
 
+  //切換下手順序
   const changePlayer = () => {
     setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
   };
-
+  
   const handleCellClick = (event:any) => {
     const cellIndex = Number(event.target.getAttribute("data-cell-index"));
 
@@ -105,10 +110,11 @@ function Game() {
     newValues[cellIndex] = currentPlayer;
     setGameState(newValues);
   }  
-
+  //重置分數
   const handleReset = () => {
     setScores(INITIAL_SCORES)
   }
+  
   return(
     <div className='h-full p-8 text-slate-800 bg-gradient-to-r from-cyan-500 to-blue-500'>
       <h1 className='text-center text-5xl mb-4 font-display text-white'>Tic Tac Toe Game Page</h1>
